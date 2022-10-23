@@ -1,7 +1,17 @@
 from typing import Union
 from fastapi import FastAPI
+from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
+import sys, os
+
 from reddit import get_all_comments_from_post, get_top_n_posts, get_id_from_url
+from analytics import run_analytics
+
+def enablePrint():
+    sys.stdout = sys.__stdout__
+
+class Search(BaseModel):
+    url: str
 
 app = FastAPI()
 
@@ -23,5 +33,13 @@ async def root():
     return {"message": data}
 
 @app.post("/search/")
-async def search(url: Union[str, None] = None):
-    return {"message": "url"}
+async def search(item: Search):
+    print(item)
+    post_id = get_id_from_url(item.url)
+    data = get_all_comments_from_post(get_top_n_posts('news', 1)[0])
+    sentiment_data = run_analytics(data)
+    
+    enablePrint()
+    print(sentiment_data)
+    
+    return {"message": data}
