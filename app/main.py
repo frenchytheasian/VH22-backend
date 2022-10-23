@@ -2,7 +2,7 @@ from typing import Union
 from fastapi import FastAPI
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
-import sys, os
+import sys
 
 from reddit import get_all_comments_from_post, get_top_n_posts, get_id_from_url
 from analytics import run_analytics
