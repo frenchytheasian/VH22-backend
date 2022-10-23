@@ -38,8 +38,8 @@ async def search(item: Search):
     post_id = get_id_from_url(item.url)
     data = get_all_comments_from_post(get_top_n_posts('news', 1)[0])
     sentiment_data = run_analytics(data)
+    sentiment_data['messages'] = data
     
     enablePrint()
-    print(sentiment_data)
     
-    return {"message": data}
+    return sentiment_data
