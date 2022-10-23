@@ -4,7 +4,7 @@ from transformers import DistilBertForSequenceClassification, pipeline, DistilBe
 def predict(text):
     model = DistilBertForSequenceClassification.from_pretrained("distilbert-base-uncased")
     
-    model.load_state_dict(torch.load("model.pt"))
+    model.load_state_dict(torch.load("ml/model.pt"))
 
     tokenizer = DistilBertTokenizerFast.from_pretrained("distilbert-base-uncased")
 
